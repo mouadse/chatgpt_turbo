@@ -4,8 +4,18 @@ import openai
 
 from config import OPENAI_API_KEY
 
+openai.api_key = OPENAI_API_KEY
+
 try:
-    openai.api_key = OPENAI_API_KEY
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": "Who won the world series in 2020?"},
+            {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
+            {"role": "user", "content": "Where was it played?"}
+        ]
+    )
 except KeyError:
     sys.stderr.write("""
   You haven't set up your API key yet.
@@ -21,15 +31,5 @@ except KeyError:
   Then, open the Secrets Tool and add OPENAI_API_KEY as a secret.
   """)
     exit(1)
-
-response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Who won the world series in 2020?"},
-        {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
-        {"role": "user", "content": "Where was it played?"}
-    ]
-)
 
 print(response)
