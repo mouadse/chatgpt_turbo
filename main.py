@@ -1,16 +1,11 @@
-import os
 import sys
 
 import openai
 
 from config import OPENAI_API_KEY
 
-print(OPENAI_API_KEY)
-
-openai.api_key = OPENAI_API_KEY
-
 try:
-    openai.api_key = os.environ['OPENAI_API_KEY']
+    openai.api_key = OPENAI_API_KEY
 except KeyError:
     sys.stderr.write("""
   You haven't set up your API key yet.
